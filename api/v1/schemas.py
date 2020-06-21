@@ -20,7 +20,7 @@ class PageBase(BaseModel):
     pageSize: int 当前分页长度 默认 10
     """
     page: int = 1
-    pageSize: conint(le=50) = 10    # 限制最大长度小于等于 50 默认10
+    pageSize: conint(le=50) = 10  # 限制最大长度小于等于 50 默认10
 
 
 class HomeGoods(PageBase):
@@ -35,3 +35,11 @@ class Category(PageBase):
     """
     cateId: int
     tabId: int
+
+
+class GoodsInfo(BaseModel):
+    """
+    商品详情Id  \n
+    goodsId: 默认 为123 只能传123 \n
+    """
+    goodsId: int = 123

@@ -15,10 +15,13 @@ from fastapi import FastAPI, Request, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
+
 
 from api.v1 import api_v1
 from extensions import logger
 from utils import  response_code
+from utils.custom_exc import PostParamsError
 
 # swigger 文档分类 https://fastapi.tiangolo.com/tutorial/metadata/
 tags_metadata = [
@@ -67,6 +70,13 @@ def register_exception(app: FastAPI):
     :param app:
     :return:
     """
+    # 捕获自定义异常
+    @app.exception_handler(PostParamsError)
+    async def unicorn_exception_handler(request: Request, exc: PostParamsError):
+        return JSONResponse(
+            status_code=418,
+            content={"code": 400, "data": {"tip": exc.err_desc}, "status": "fail"},
+        )
 
     # 捕获参数 验证错误
     @app.exception_handler(RequestValidationError)
@@ -85,3 +95,26 @@ def register_exception(app: FastAPI):
             status_code=418,
             content={"code": 500, "data": {"tip": "服务器错误"}, "status": "fail"},
         )
+
+
+def register_cors(app):
+    """
+    支持跨域
+
+    貌似发现了一个bug
+    https://github.com/tiangolo/fastapi/issues/133
+
+    :param app:
+    :return:
+    """
+
+    app.add_middleware(
+        CORSMiddleware,
+        # allow_origins=['http://localhost:8081'],  # 有效, 但是本地vue端口一直在变化, 接口给其他人用也不一定是这个端口
+        # allow_origins=['*'],   # 无效 bug allow_origins=['http://localhost:8081']
+        allow_origin_regex='https?://.*',   # 改成用正则就行了
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+

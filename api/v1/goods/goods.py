@@ -11,24 +11,28 @@
 from api.v1.database import get_db
 from api.v1 import api_v1
 from utils import response_code
+from api.v1.schemas import GoodsInfo
+
+from utils import custom_exc
 
 
 @api_v1.post("/goods/detail", tags=["详情"], summary="商品详情页信息，固定goodsId传123")
-async def goods_detail(goodsId: int = 123):
+async def goods_detail(goods_info: GoodsInfo):
     """
     商品详情页信息 \n
-    :param: goodsId 商品id 默认123 额 也只有123哈哈哈 \n
+    goodsId 商品id 默认123 额 也只有123哈哈哈 \n
+    :param: goods_info
     :return:
     """
     session = next(get_db())
     sql = f"""select goods_id, banners, title, price, original_price, sales_volume, sales_collect,sales_deliver, 
-    discount_volume, discount_activity, logistics_info, shop_id, goods_image, goods_desc from mall_goods_detail where goods_id={goodsId}"""
-    goods_info = session.execute(sql)
-    info = goods_info.fetchone()
-
-    goods_id = info[0]
+    discount_volume, discount_activity, logistics_info, shop_id, goods_image, goods_desc from mall_goods_detail where goods_id={goods_info.goodsId}"""
+    goods_res = session.execute(sql)
+    info = goods_res.fetchone()
+    if not info:
+        raise custom_exc.PostParamsError(err_desc=f"数据库没有goodsId为{goods_info.goodsId}的数据")
     data = {
-        "goodsId": goods_id,
+        "goodsId": goods_info.goodsId,
         "banners": str(info[1]).split(","),
         "title": info[2],
         "price": info[3],
@@ -58,7 +62,7 @@ async def goods_detail(goodsId: int = 123):
     }
     data["shopInfo"] = shop_info
 
-    comment_sql = f"""select user_id, comment, buy_info from mall_goods_comment where goods_id={goods_id} 
+    comment_sql = f"""select user_id, comment, buy_info from mall_goods_comment where goods_id={goods_info.goodsId} 
                 order by id desc limit 2"""
 
     comment_res = session.execute(comment_sql)

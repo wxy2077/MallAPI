@@ -12,8 +12,6 @@
 from typing import Union
 
 
-# from flask_restful import fields
-
 def resp_200(data: Union[list, dict, str]) -> dict:
     return {
         'code': 200,

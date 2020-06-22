@@ -60,7 +60,8 @@ def create_app():
         # responses={404: {"description": "Not found"}},
     )
 
-    register_exception(app)
+    register_exception(app)  # 注册捕获异常信息
+    register_cors(app)       # 跨域设置
     return app
 
 
@@ -73,15 +74,16 @@ def register_exception(app: FastAPI):
     # 捕获自定义异常
     @app.exception_handler(PostParamsError)
     async def unicorn_exception_handler(request: Request, exc: PostParamsError):
+        logger.error(f"参数查询异常\nURL:{request.url}\nHeaders:{request.headers}\n{traceback.format_exc()}")
         return JSONResponse(
-            status_code=418,
+            status_code=status.HTTP_400_BAD_REQUEST,
             content={"code": 400, "data": {"tip": exc.err_desc}, "status": "fail"},
         )
 
     # 捕获参数 验证错误
     @app.exception_handler(RequestValidationError)
     async def validation_exception_handler(request: Request, exc: RequestValidationError):
-        logger.error(f"参数错误: \n{traceback.format_exc()}")
+        logger.error(f"参数错误\nURL:{request.url}\nHeaders:{request.headers}\n{traceback.format_exc()}")
         return JSONResponse(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             content=jsonable_encoder({"code": 400, "data": {"tip": exc.errors()}, "body": exc.body, "status": "fail"}),
@@ -90,9 +92,9 @@ def register_exception(app: FastAPI):
     # 捕获全部异常
     @app.exception_handler(Exception)
     async def all_exception_handler(request: Request, exc: Exception):
-        logger.error(f"全局异常: \n{traceback.format_exc()}")
+        logger.error(f"全局异常\nURL:{request.url}\nHeaders:{request.headers}\n{traceback.format_exc()}")
         return JSONResponse(
-            status_code=418,
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             content={"code": 500, "data": {"tip": "服务器错误"}, "status": "fail"},
         )
 

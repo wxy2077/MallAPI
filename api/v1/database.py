@@ -9,6 +9,9 @@
 
 使用MySql数据库
 
+可参考官网:
+https://fastapi.tiangolo.com/tutorial/sql-databases/#create-the-sqlalchemy-parts
+
 pip install alembic
 
 alembic init alembic
@@ -22,13 +25,10 @@ from sqlalchemy.orm import sessionmaker
 
 from setting import config
 
-# Mysql地址
-SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{config.MYSQL_USERNAME}:{config.MYSQL_PASSWORD}@" \
-                          f"{config.MYSQL_HOST}/{config.MYSQL_DATABASE}?charset=utf8mb4"
-
 engine = create_engine(
-    SQLALCHEMY_DATABASE_URL
+    config.SQLALCHEMY_DATABASE_URI
 )
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()

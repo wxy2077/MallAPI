@@ -14,23 +14,34 @@ import traceback
 from fastapi import FastAPI, Request, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
-from fastapi.exceptions import RequestValidationError, ValidationError
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 
 
 from api.v1 import api_v1
 from extensions import logger
+from setting import config
 from utils import  response_code  # 导入自定义返回状态吗
 from utils.custom_exc import PostParamsError   # 自定义异常
 
 # swigger 文档分类 https://fastapi.tiangolo.com/tutorial/metadata/
+tags_metadata = [
+    {
+        "name": "首页API",
+        "description": "商品首页数据API",
+    },
+]
 
 
 def create_app():
     app = FastAPI(
         title="FastAPI",
-        description="更多信息查看https://www.charmcode.cn/article/2020-06-08_vue_mall_api ",
+        description="更多信息查看 https://www.charmcode.cn/article/2020-06-08_vue_mall_api ",
         version="0.1.1",
+        docs_url=config.DOCS_URL,
+        openapi_url=config.OPENAPI_URL,
+        redoc_url=config.REDOC_URL,
+        openapi_tags=tags_metadata
     )
 
     app.include_router(

@@ -9,10 +9,13 @@
 
 """
 
-from api.v1 import api_v1
+from fastapi import APIRouter
 
 
-@api_v1.post("/goods/detail/backup", tags=["备份"], summary="商品详情,备份信息")
+router = APIRouter()
+
+
+@router.post("/goods/detail/backup", summary="商品详情,备份信息")
 async def goods_detail():
     """
     商品详情页信息备份 \n

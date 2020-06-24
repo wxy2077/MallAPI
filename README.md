@@ -19,7 +19,7 @@
 |_FastDemo                        // 主项目文件
 | 
 |___api
-| |_____init__.py               // 工厂模式生成app对象
+| |_____init__.py               // (重要)工厂模式生成app对象
 | |____v1
 | |____database.py              // 数据库对象
 | |____schemas.py               // 验证参数       （可放到对应模块内)
@@ -118,6 +118,13 @@ uvicorn main:app --host=127.0.0.1 --port=8010 --reload
 python main.py
 ```
 
+## 启动后API文档地址
+
+```
+
+http://127.0.0.1:8010/api/v1/docs    # 
+
+```
 
 
 

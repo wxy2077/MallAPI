@@ -10,16 +10,17 @@
 分类
 
 """
-from fastapi import Depends, Query
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
-from api.v1 import api_v1
 from api.v1.database import get_db
 from api.v1.schemas import Category
 from utils import response_code
 
+router = APIRouter()
 
-@api_v1.get("/category", tags=["分类"], summary="分类左边列表")
+
+@router.get("/category", summary="分类左边列表")
 async def get_category(db: Session = Depends(get_db)):
     """
 
@@ -33,7 +34,7 @@ async def get_category(db: Session = Depends(get_db)):
     return response_code.resp_200(info)
 
 
-@api_v1.get("/category/tab", tags=["分类"], summary="分类tab选项")
+@router.get("/category/tab", summary="分类tab选项")
 async def category_tab(db: Session = Depends(get_db), *, cate_id: int=Query(1, alias="cateId", title="分类Id")):
     """
     查询分类的 tab 信息 \n
@@ -49,7 +50,7 @@ async def category_tab(db: Session = Depends(get_db), *, cate_id: int=Query(1, a
     return response_code.resp_200(info)
 
 
-@api_v1.post("/category/goods", tags=["分类"], summary="分类 选项goods")
+@router.post("/category/goods", summary="分类 选项goods")
 async def category_goods(db: Session = Depends(get_db), *, category: Category):
     """
     获取分类数据信息 \n

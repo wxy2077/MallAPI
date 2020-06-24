@@ -10,11 +10,12 @@
 备份数据直接查询sql
 
 """
+from fastapi import APIRouter
 
-from api.v1 import api_v1
+router = APIRouter()
 
 
-@api_v1.get("/home/banner/backup", tags=["备份"], summary="路由中有backup的是相同路由备份信息")
+@router.get("/home/banner/backup", summary="路由中有backup的是相同路由备份信息")
 async def home_banner():
     return {
         "code": 200,
@@ -56,7 +57,7 @@ async def home_banner():
     }
 
 
-@api_v1.get("/home/features/backup", tags=["备份"], summary="首页轮播图下的四张图")
+@router.get("/home/features/backup", summary="首页轮播图下的四张图")
 async def home_features():
     return {
         "code": 200,
@@ -86,7 +87,7 @@ async def home_features():
     }
 
 
-@api_v1.get("/home/recommends/backup", tags=["备份"], summary="首页推荐")
+@router.get("/home/recommends/backup", summary="首页推荐")
 async def home_recommends():
     return {
         "code": 200,
@@ -136,7 +137,7 @@ async def home_recommends():
     }
 
 
-@api_v1.get("/home/tab/backup", tags=["备份"], summary="首页推荐信息")
+@router.get("/home/tab/backup", summary="首页推荐信息")
 async def goods_tab():
     return {
         "code": 200,
@@ -158,7 +159,7 @@ async def goods_tab():
     }
 
 
-@api_v1.get("/home/goods/backup", tags=["备份"], summary="首页tab切换信息")
+@router.get("/home/goods/backup", summary="首页tab切换信息")
 async def home_goods(tabId: int = 0, page: int = 1, pageSize: int = 10):
     return {
         "code": 200,

@@ -9,11 +9,13 @@
 
 """
 
-from api.v1 import api_v1
+from fastapi import APIRouter
 from api.v1.schemas import Category
 
+router = APIRouter()
 
-@api_v1.get("/category/backup", tags=["备份"], summary="分类左边列表")
+
+@router.get("/category/backup", summary="分类左边列表")
 async def get_category():
     return {
         "code": 200,
@@ -63,7 +65,7 @@ async def get_category():
     }
 
 
-@api_v1.get("/category/tab/backup", tags=["备份"], summary="分类tab选项")
+@router.get("/category/tab/backup", summary="分类tab选项")
 async def category_tab(cateId: int = 1):
     """
     查询分类的 tab 信息 \n
@@ -91,7 +93,7 @@ async def category_tab(cateId: int = 1):
     }
 
 
-@api_v1.post("/category/goods/backup", tags=["备份"], summary="分类 选项goods")
+@router.post("/category/goods/backup", summary="分类 选项goods")
 async def category_goods(category: Category):
     """
     获取分类数据信息 \n

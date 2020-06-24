@@ -10,18 +10,19 @@
 """
 
 from sqlalchemy.orm import Session
-from fastapi import Depends
+from fastapi import Depends, APIRouter, Query
 
 from api.v1.database import get_db
-from api.v1 import api_v1
 from extensions import logger
 from utils import response_code
 
+router = APIRouter()
 
-@api_v1.get("/home/banner", tags=["首页"], summary="首页轮播图")
+
+@router.get("/home/banner", summary="首页轮播图")
 async def home_banner(db: Session = Depends(get_db)):
     """
-    首页轮播图
+    首页轮播图 \n
     :return: 轮播图banner link, image
     """
 
@@ -38,7 +39,7 @@ async def home_banner(db: Session = Depends(get_db)):
     return response_code.resp_200(banner_data)
 
 
-@api_v1.get("/home/features", tags=["首页"], summary="首页轮播图下的四张图")
+@router.get("/home/features", summary="首页轮播图下的四张图")
 async def home_features(db: Session = Depends(get_db)):
     """
     首页特色 features \n
@@ -59,7 +60,7 @@ async def home_features(db: Session = Depends(get_db)):
     return response_code.resp_200(return_data)
 
 
-@api_v1.get("/home/recommends", tags=["首页"], summary="首页推荐分类, 原视频是一张整图")
+@router.get("/home/recommends", summary="首页推荐分类")
 async def home_recommends(db: Session = Depends(get_db)):
     """
     首页推荐 recommends \n
@@ -80,7 +81,7 @@ async def home_recommends(db: Session = Depends(get_db)):
     return response_code.resp_200(return_data)
 
 
-@api_v1.get("/home/tab", tags=["首页"], summary="首页tab切换的信息")
+@router.get("/home/tab", summary="首页tab切换的信息")
 async def goods_tab(db: Session = Depends(get_db)):
     """
     切换的tab信息 \n
@@ -100,30 +101,35 @@ async def goods_tab(db: Session = Depends(get_db)):
     return response_code.resp_200(return_data)
 
 
-@api_v1.get("/home/goods", tags=["首页"], summary="tab切换商品信息")
-async def home_goods(db: Session = Depends(get_db), tabId: int = 0, page: int = 1, pageSize: int = 10):
+@router.get("/home/goods", summary="tab切换商品信息")
+async def home_goods(
+        db: Session = Depends(get_db),
+        tab_id: int = Query(0, alias="tabId"),
+        page: int = 1,
+        page_size: int = Query(10, alias="pageSize", le=50)):
     """
     切换的 tab 商品信息\n
-    :param tabId 指定的tabId 类型 默认0 全部分类查询前10条\n
+    :param db
+    :param tab_id 指定的tabId 类型 默认0 全部分类查询前10条\n
     :param page 当前多少页 默认第1页\n
-    :param pageSize 每页数量 默认10条\n
+    :param page_size 每页数量 默认10条\n
     :return:
     """
     logger.info("首页商品切换请求正常")
 
     # 由于limit 从0开始,所以 默认-1
-    offset = (page - 1) * pageSize
-    if tabId:
+    offset = (page - 1) * page_size
+    if tab_id:
         # 查询当前分类到数量
-        count_sql = f"select count(1) from mall_goods where tab_id={tabId}"
+        count_sql = f"select count(1) from mall_goods where tab_id={tab_id}"
         count_data = db.execute(count_sql)
         all_count = count_data.fetchone()[0]
         if all_count <= 0:
             return_data = {
-                "msg": f"当前查找的tabID:{tabId}不存在, /home/tab 此接口获取tabId"
+                "msg": f"当前查找的tabID:{tab_id}不存在, /home/tab 此接口获取tabId"
             }
         else:
-            sql = f"SELECT link,image,title,price,collection from mall_goods WHERE tab_id={tabId} order by goods_id desc limit {offset}, {pageSize}"
+            sql = f"SELECT link,image,title,price,collection from mall_goods WHERE tab_id={tab_id} order by goods_id desc limit {offset}, {page_size}"
 
             query_data = db.execute(sql)
             return_data = {
@@ -131,14 +137,14 @@ async def home_goods(db: Session = Depends(get_db), tabId: int = 0, page: int = 
                 "pageInfo": {
                     "allCount": all_count,
                     "page": page,
-                    "pageSize": pageSize
+                    "pageSize": page_size
 
                 }
             }
 
             for item in query_data:
                 temp_data = {
-                    "tabId": tabId,
+                    "tabId": tab_id,
                     "link": item[0],
                     "image": item[1],
                     "title": item[2],
@@ -155,7 +161,7 @@ async def home_goods(db: Session = Depends(get_db), tabId: int = 0, page: int = 
         return_data = []
         # 循环每个tab
         for tab in tab_res.fetchall():
-            data_sql = f"""SELECT tab_id,link,image,title,price,collection from mall_goods WHERE tab_id={tab[0]} order by goods_id desc limit 0, {pageSize}"""
+            data_sql = f"""SELECT tab_id,link,image,title,price,collection from mall_goods WHERE tab_id={tab[0]} order by goods_id desc limit 0, {page_size}"""
             query_data = db.execute(data_sql)
             goods_item = {
                 "page": 1,

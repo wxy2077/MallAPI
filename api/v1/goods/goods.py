@@ -8,22 +8,26 @@
 """
 
 """
-from fastapi import Depends
+from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
 
 from api.v1.database import get_db
-from api.v1 import api_v1
-from utils import response_code
 from api.v1.schemas import GoodsInfo
+
+from utils import response_code
 
 from utils import custom_exc
 
 
-@api_v1.post("/goods/detail", tags=["详情"], summary="商品详情页信息，固定goodsId传123")
-async def goods_detail(db: Session = Depends(get_db), *, goods_info: GoodsInfo):
+router = APIRouter()
+
+
+@router.post("/goods/detail", summary="商品详情页信息，固定goodsId传123")
+async def goods_detail(*, db: Session = Depends(get_db), goods_info: GoodsInfo):
     """
     商品详情页信息 \n
     goodsId 商品id 默认123 额 也只有123哈哈哈 \n
+    :param: db
     :param: goods_info
     :return:
     """

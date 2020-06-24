@@ -8,6 +8,9 @@
 """
 
 """
+from fastapi import Depends
+from sqlalchemy.orm import Session
+
 from api.v1.database import get_db
 from api.v1 import api_v1
 from utils import response_code
@@ -17,17 +20,16 @@ from utils import custom_exc
 
 
 @api_v1.post("/goods/detail", tags=["详情"], summary="商品详情页信息，固定goodsId传123")
-async def goods_detail(goods_info: GoodsInfo):
+async def goods_detail(db: Session = Depends(get_db), *, goods_info: GoodsInfo):
     """
     商品详情页信息 \n
     goodsId 商品id 默认123 额 也只有123哈哈哈 \n
     :param: goods_info
     :return:
     """
-    session = next(get_db())
     sql = f"""select goods_id, banners, title, price, original_price, sales_volume, sales_collect,sales_deliver, 
     discount_volume, discount_activity, logistics_info, shop_id, goods_image, goods_desc from mall_goods_detail where goods_id={goods_info.goodsId}"""
-    goods_res = session.execute(sql)
+    goods_res = db.execute(sql)
     info = goods_res.fetchone()
     if not info:
         raise custom_exc.PostParamsError(err_desc=f"数据库没有goodsId为{goods_info.goodsId}的数据")
@@ -50,7 +52,7 @@ async def goods_detail(goods_info: GoodsInfo):
     shop_id = info[11]
     shop_sql = f"""select shop_name, shop_image,credit_rating, goods_num, follow, cumulative_sales from mall_shop
             where shop_id={shop_id}"""
-    shop_res = session.execute(shop_sql)
+    shop_res = db.execute(shop_sql)
     shop_res = shop_res.fetchone()
     shop_info = {
         "shopName": shop_res[0],
@@ -65,7 +67,7 @@ async def goods_detail(goods_info: GoodsInfo):
     comment_sql = f"""select user_id, comment, buy_info from mall_goods_comment where goods_id={goods_info.goodsId} 
                 order by id desc limit 2"""
 
-    comment_res = session.execute(comment_sql)
+    comment_res = db.execute(comment_sql)
     comment_res = comment_res.fetchall()
     comment_info = []
     for i in comment_res:

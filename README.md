@@ -2,7 +2,7 @@
 
 > 学习FastAPI 构建项目目录
 
-构建项目接口
+构建项目接口: [对应博客](https://www.charmcode.cn/article/2020-06-08_vue_mall_api):https://www.charmcode.cn/article/2020-06-08_vue_mall_api
 
 #### 环境
 ![Python版本](https://img.shields.io/badge/Python-3.7+-brightgreen.svg "版本号")

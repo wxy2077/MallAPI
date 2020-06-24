@@ -13,7 +13,7 @@ from api.v1 import api_v1
 
 
 @api_v1.post("/goods/detail/backup", tags=["备份"], summary="商品详情,备份信息")
-async def goods_detail(goodsId: int = 123):
+async def goods_detail():
     """
     商品详情页信息备份 \n
     :param: goodsId 商品id 默认123 额 也只有123哈哈哈 \n

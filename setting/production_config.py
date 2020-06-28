@@ -10,6 +10,7 @@
 生产环境
 
 """
+import os
 
 from typing import Union, Optional
 from pydantic import AnyHttpUrl, BaseSettings, IPvAnyAddress
@@ -23,9 +24,9 @@ class Config(BaseSettings):
     # 禁用 redoc 文档
     REDOC_URL: Optional[str] = None
 
-    MYSQL_USERNAME: str = 'root'
-    MYSQL_PASSWORD: str = ""
-    MYSQL_HOST: Union[AnyHttpUrl, IPvAnyAddress] = ""
+    MYSQL_USERNAME: str = os.getenv("MYSQL_USER", "root")
+    MYSQL_PASSWORD: str = os.getenv("MYSQL_PASSWORD", "admin")
+    MYSQL_HOST: Union[AnyHttpUrl, IPvAnyAddress] = os.getenv("MYSQL_HOST", "127.0.0.1")
     MYSQL_DATABASE: str = 'Mall'
 
     # Mysql地址

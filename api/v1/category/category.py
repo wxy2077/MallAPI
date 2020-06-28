@@ -65,7 +65,7 @@ async def category_goods(db: Session = Depends(get_db), *, category: Category):
     # 由于limit 从0开始,所以 默认-1
     offset = (category.page - 1) * category.pageSize
 
-    sql = f"SELECT link,image,title,price,collection from mall_goods WHERE tab_id={category.tabId} and cate_id={category.cateId} order by goods_id desc limit {offset}, {category.pageSize}"
+    sql = f"SELECT link,image,title,price,collection from mall_goods WHERE tab_id={category.tabId} order by goods_id desc limit {offset}, {category.pageSize}"
     goods_info = db.execute(sql)
     items = goods_info.fetchall()
 

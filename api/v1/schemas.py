@@ -30,10 +30,8 @@ class HomeGoods(PageBase):
 class Category(PageBase):
     """
     商品分类查询 \n
-    cateId: 分类Id \n
     tabId: 分类的tabId \n
     """
-    cateId: int
     tabId: int
 
 

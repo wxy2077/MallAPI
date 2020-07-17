@@ -14,9 +14,13 @@
 
 官方有推荐项目文件模版  https://fastapi.tiangolo.com/tutorial/bigger-applications/
 
+
+<details>
+<summary>项目文件结构</summary>
+
 ```
 .
-|_FastDemo                        // 主项目文件
+|_app                           // 主项目文件
 | 
 |___api
 | |_____init__.py               // (重要)工厂模式生成app对象
@@ -67,8 +71,10 @@
 
 ```
 
+</details>
+
 ## 配置环境
-> setting目录下 __init__.py文件，会根据`ENV`的环境变量 导入不同的环境
+> setting目录下 \_\_init__.py文件，会根据`ENV`的环境变量 导入不同的环境
 
 development_config.py  // 开发环境配置
 production_config.py   // 生产环境配置
@@ -82,9 +88,9 @@ production_config.py   // 生产环境配置
 
 > 上面两个文件是mysql数据， 需自行导入
 
+## 常规启动
 
-## 安装依赖
-
+#### 安装依赖
 ```
 # 推荐先安装pipenv
 pip install pipenv -i https://mirrors.aliyun.com/pypi/simple/
@@ -93,7 +99,7 @@ pip install pipenv -i https://mirrors.aliyun.com/pypi/simple/
 cd /项目目录/MallAPI
 
 # 安装pipenv python版本3.7+
-pipenv install --python 3.8 # 注意 --python空格3.8
+pipenv install --python 3.7 # 注意 --python空格3.7
 
 # 安装完后激活环境
 pipenv shell
@@ -103,7 +109,7 @@ pip install -r requirements.text -i https://mirrors.aliyun.com/pypi/simple/
 
 ```
 
-## 启动
+#### 启动
 
 ```
 cd /项目目录/MallAPI
@@ -118,22 +124,36 @@ uvicorn main:app --host=127.0.0.1 --port=8010 --reload
 python main.py
 ```
 
+## Docker 启动
+
+#### 构建镜像
+
+可以参考FastAPI作者tiangolo构建的镜像
+
+https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker
+
+镜像名字随便取的, 继承FastAPI作者构建的镜像
+
+```shell
+docker build -t mallapp .
+
+```
+
+临时测试运行
+```shell
+docker run -d --name mycontainer -p 8030:8030 mallapp
+```
+
+```shell
+docker run -d --name mycontainer -p 80:80 mallapp
+```
+
 ## 启动后API文档地址
 
 ```
 
-http://127.0.0.1:8010/api/v1/docs    # 
+http://127.0.0.1:8010/api/v1/docs    
 
-```
-
-
-
-## 配置文件环境变量
-
-```
-# Pycharm 环境变量
-https://stackoverflow.com/questions/21538859/pycharm-set-environment-variable-for-run-manage-py-task/22899916
-https://stackoverflow.com/questions/42708389/how-to-set-environment-variables-in-pycharm
 ```
 
 
@@ -150,6 +170,10 @@ pip install alembic
 alembic init alembic
 ```
 
+具体使用 sqlalchemy 可以参考我这个后台管理的Demo
+
+https://github.com/CoderCharm/FastAdmin/tree/master/backend
+
 
 
 #### 参考
@@ -158,3 +182,7 @@ alembic init alembic
 - [官方推荐项目生成模版](https://github.com/tiangolo/full-stack-fastapi-postgresql) https://github.com/tiangolo/full-stack-fastapi-postgresql
 
 - 框架对比 https://fastapi.tiangolo.com/alternatives/#flask
+
+- [awesome-fastapi](https://github.com/mjhea0/awesome-fastapi) https://github.com/mjhea0/awesome-fastapi
+
+- [fastapi-realworld-example-app](https://github.com/nsidnev/fastapi-realworld-example-app/blob/master/Dockerfile) https://github.com/nsidnev/fastapi-realworld-example-app/blob/master/Dockerfile

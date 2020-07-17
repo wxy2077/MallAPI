@@ -144,6 +144,8 @@ docker build -t mallapp .
 docker run -d --name mycontainer -p 8030:8030 mallapp
 ```
 
+后台运行启动
+
 ```shell
 docker run -d --name mycontainer -p 80:80 mallapp
 ```

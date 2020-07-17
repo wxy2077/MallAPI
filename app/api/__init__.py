@@ -21,7 +21,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from api.v1 import api_v1
 from extensions import logger
 from setting import config
-from utils import  response_code  # 导入自定义返回状态吗
 from utils.custom_exc import PostParamsError   # 自定义异常
 
 # swigger 文档分类 https://fastapi.tiangolo.com/tutorial/metadata/

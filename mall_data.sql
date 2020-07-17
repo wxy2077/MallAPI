@@ -739,6 +739,26 @@ values (123, "https://s11.mogucdn.com/mlcdn/c45406/170919_6h807cjg6c6e065kkalf9g
 "每天3点前下单，基本都是可以当天发货的哦。 还有7天时间无理由包退换，我们是免费送运费险的。让亲们可以无忧无虑的购买。（谢谢支持）"
 )
 
+insert into mall_goods_detail(goods_id, banners, title, price, original_price, sales_volume, sales_collect,
+sales_deliver, discount_volume, discount_activity, logistics_info, shop_id, goods_image, goods_desc)
+values (456, "https://s5.mogucdn.com/mlcdn/c45406/200330_11f1ig63711d9485821jk40elig1l_800x800.jpg,https://s11.mogucdn.com/mlcdn/c45406/200330_2d40if7l210b1jl0d167i5b5c14c1_800x800.jpg,https://s11.mogucdn.com/mlcdn/c45406/200330_031gdj4fjd695fcfh13ahcaiehhlj_800x800.jpg,https://s5.mogucdn.com/mlcdn/c45406/200330_23fi8i7acda230i9b49ed0ig78g61_800x800.jpg,https://s11.mogucdn.com/mlcdn/c024f5/190417_2d51ljj2a42lddkg49ibag494g3ca_1125x540.png",
+"大波浪底老爹鞋女2020新款百搭学生网面透气小白休闲运动鞋女", 78.00, 268, 1031, 3100, "72小时内发货", "满99减2,满120减5","买三件送一件",
+"退货补运费,全国包邮,七天无理由退货", 2001,
+"https://s11.mogucdn.com/mlcdn/c45406/200330_55ie51il6ie3286ak08cf7cglgcki_800x800.jpg,https://s5.mogucdn.com/mlcdn/c45406/200330_205dfd1bfd83g3ibfjj8b0ai217cf_750x861.jpg,https://s5.mogucdn.com/mlcdn/c45406/200330_0f36le8jkhcf742je1jg29a3ea9cb_750x1299.jpg,https://s5.mogucdn.com/mlcdn/c45406/200330_0ca99ce2a4k88j3a45e5cgcfj816e_750x1429.jpg,https://s5.mogucdn.com/mlcdn/c45406/200330_06kj4beajcdc2fkg6ekgi67jh334e_750x695.jpg,https://s11.mogucdn.com/mlcdn/c45406/200330_1k4cc50l4k1bi7jh55fljk8hai4bl_750x1328.jpg,https://s11.mogucdn.com/mlcdn/c45406/200330_7a09eb3h03d06hc0eg8df36fc0956_800x800.jpg,https://s11.mogucdn.com/mlcdn/c45406/200330_6bagbc1860fekf7e46fh5edb5kdjf_750x1307.jpg,https://s11.mogucdn.com/mlcdn/c45406/200330_210idb8ile49j31j7lal7jbbhfh9g_800x800.jpg,https://s5.mogucdn.com/mlcdn/c45406/200330_4bg10l76j1b6elldcj75h22j10178_750x659.jpg,https://s11.mogucdn.com/mlcdn/c45406/200330_781d999ldbe57e489a6330011k739_800x800.jpg,https://s5.mogucdn.com/mlcdn/c45406/200330_06bc7j2493h7kgg1633ae81dkcghg_750x1287.jpg,https://s11.mogucdn.com/mlcdn/c45406/200330_0ck1l7gdal05f6g0ed5b966566725_750x1176.jpg,https://s5.mogucdn.com/mlcdn/c45406/200330_16a28f300k36jd203he8d5ba7g909_750x1388.jpg,https://s11.mogucdn.com/mlcdn/c45406/200330_7bi9lb3hl94ki2792eh823g7g7g31_800x800.jpg",
+"网红同款街拍超火休闲厚底运动鞋，上脚增高显瘦，轻便舒适网面透气，旅游逛街休闲跑步约会都挺合适，百搭简单大气，不管是裙子， 牛仔裤九分裤休闲裤短裤短裙都可以随意搭配穿着...【尺码标准，建议按平时穿的码数拍，如果脚背高或者脚宽脚胖的菇凉建议比平时怕大一码】"
+)
+
+insert into mall_goods_detail(goods_id, banners, title, price, original_price, sales_volume, sales_collect,
+sales_deliver, discount_volume, discount_activity, logistics_info, shop_id, goods_image, goods_desc)
+values (789, "https://s5.mogucdn.com/mlcdn/c45406/181118_81h6j17dl7933c4faia6ddfd4flk4_640x960.jpg,https://s5.mogucdn.com/mlcdn/c45406/181118_2ab2gc96hhjjc6962j8bhc8ad2d19_640x960.jpg,https://s11.mogucdn.com/mlcdn/c45406/181118_5h6j09ld4bi83e8egib8lblelce89_720x960.jpg",
+"蓝色砂石玻璃球星星S925纯银耳针耳线海洋之眸创意气质耳环女款超仙配饰学生生日礼物", 18.90, 27.00, 11231, 3100, "72小时内发货", "满99减2,满120减5","买三件送一件",
+"退货补运费,全国包邮,七天无理由退货", 2001,
+"https://s5.mogucdn.com/mlcdn/c45406/181118_2a7gak6jke5f41hi99j08lgh3e09e_750x658.jpg,https://s5.mogucdn.com/mlcdn/c45406/181118_0fbg75ll66edd7ke8a50621a6gjd1_750x582.jpg,https://s11.mogucdn.com/mlcdn/c45406/181118_5g24bl279gakg186ffe43l0efh4ij_750x774.jpg,https://s11.mogucdn.com/mlcdn/c45406/181118_540b375ea6ca253idg8d36alk652h_750x592.jpg,https://s11.mogucdn.com/mlcdn/c45406/181118_06laf6e106jd124be6e7891j9k61c_750x566.jpg,https://s11.mogucdn.com/mlcdn/c45406/181118_74ka9dh2afk08hacf300c5hbi5417_750x642.jpg,https://s11.mogucdn.com/mlcdn/c45406/181118_5aal1g1c94i8546f0d1bf15h43hch_750x1053.jpg,https://s5.mogucdn.com/mlcdn/c45406/181118_0g0e3lh24ca40jh835ci7h5i7gkj6_750x608.jpg,https://s5.mogucdn.com/mlcdn/c45406/181118_4bk370835ckbacb4d3k93fj2filig_750x846.jpg,https://s5.mogucdn.com/mlcdn/c45406/181118_44li153eb0l3deh8d16fbaj24d3le_750x636.jpg,https://s5.mogucdn.com/mlcdn/c45406/181118_4d623jbb9klhicj8d7j557g0f751g_750x566.jpg,https://s5.mogucdn.com/mlcdn/c45406/181118_4aba42ke67haeceha9039f78ji1jk_750x870.jpg,https://s11.mogucdn.com/mlcdn/c024f5/190417_2d51ljj2a42lddkg49ibag494g3ca_1125x540.png",
+"蓝色砂石玻璃球星星S925纯银耳针耳线海洋之眸创意气质耳环女款超仙配饰学生生日礼物"
+)
+
+
+
 
 -- 店铺信息
 insert into mall_shop (shop_id, shop_name, shop_image,credit_rating, goods_num, follow, cumulative_sales) values (
@@ -755,5 +775,19 @@ insert into mall_goods_comment (goods_id, user_id, comment, buy_info)values (
 insert into mall_goods_comment (goods_id, user_id, comment, buy_info)values (
 123, 333, "看着还行，穿着很舒服", "178cm,55kg"
 );
+
+
+insert into mall_goods_comment (goods_id, user_id, comment, buy_info)values (
+456, 222, "鞋收到了，很合适", "40码"
+);
+
+insert into mall_goods_comment (goods_id, user_id, comment, buy_info)values (
+456, 222, "鞋子看起来很好看", "42码"
+);
+
+insert into mall_goods_comment (goods_id, user_id, comment, buy_info)values (
+789, 222, "戴起来很漂亮", "E213蓝砂耳环"
+);
+
 
 

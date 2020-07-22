@@ -22,6 +22,9 @@ class Config(BaseSettings):
     # 禁用 redoc 文档
     REDOC_URL: Optional[str] = None
 
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8
+    SECRET_KEY: str = 'aeq)s(*&dWEQasd8**&^9asda_asdasd*&*&^+_sda'
+
     # 配置你的Mysql环境
     MYSQL_USERNAME: str = 'root'
     MYSQL_PASSWORD: str = "Admin12345-"

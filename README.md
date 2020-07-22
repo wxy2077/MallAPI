@@ -152,11 +152,12 @@ docker run -d --name mycontainer -p 80:80 mallapp
 
 ## 启动后API文档地址
 
-```
-
 http://127.0.0.1:8010/api/v1/docs    
 
-```
+
+## 线上文档地址
+
+https://www.charmcode.cn/api/v1/docs
 
 
 ## sqlalchemy + alembic数据迁移

@@ -25,10 +25,10 @@ from fastapi.responses import JSONResponse, Response, ORJSONResponse
 from typing import Union
 
 
-def resp_200(data: Union[list, dict, str]) -> dict:
+def resp_200(data: Union[list, dict, str]=None, *, message: str="Success") -> dict:
     return {
             'code': 200,
-            'message': "Success",
+            'message': message,
             'data': data,
         }
 

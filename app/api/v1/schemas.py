@@ -10,7 +10,7 @@
 验证参数
 
 """
-
+from typing import Optional
 from pydantic import BaseModel, conint
 
 
@@ -41,3 +41,15 @@ class GoodsInfo(BaseModel):
     goodsId: 默认 为123 只能传123 \n
     """
     goodsId: int = 123
+
+
+class UserLogin(BaseModel):
+    """
+    用户登录
+    """
+    username: str
+    password: str
+
+
+class TokenPayload(BaseModel):
+    sub: Optional[int] = None

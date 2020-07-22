@@ -21,7 +21,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from api.v1 import api_v1
 from extensions import logger
 from setting import config
-from utils.custom_exc import PostParamsError   # 自定义异常
+from utils.custom_exc import PostParamsError, TokenAuthError   # 自定义异常
 
 # swigger 文档分类 https://fastapi.tiangolo.com/tutorial/metadata/
 tags_metadata = [
@@ -74,7 +74,15 @@ def register_exception(app: FastAPI):
         logger.error(f"参数查询异常\nURL:{request.url}\nHeaders:{request.headers}\n{traceback.format_exc()}")
         return JSONResponse(
             status_code=status.HTTP_400_BAD_REQUEST,
-            content={"code": 400, "data": {"tip": exc.err_desc}, "status": "fail"},
+            content={"code": 400, "data": {"tip": exc.err_desc}, "message": "fail"},
+        )
+
+    @app.exception_handler(TokenAuthError)
+    async def token_exception_handler(request: Request, exc: TokenAuthError):
+        logger.error(f"参数查询异常\nURL:{request.url}\nHeaders:{request.headers}\n{traceback.format_exc()}")
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={"code": 400, "data": None, "message": exc.err_desc},
         )
 
     # 捕获参数 验证错误
@@ -89,7 +97,7 @@ def register_exception(app: FastAPI):
         logger.error(f"参数错误\nURL:{request.url}\nHeaders:{request.headers}\n{traceback.format_exc()}")
         return JSONResponse(
             status_code=status.HTTP_400_BAD_REQUEST,
-            content=jsonable_encoder({"code": 400, "data": {"tip": exc.errors()}, "body": exc.body, "status": "fail"}),
+            content=jsonable_encoder({"code": 400, "data": {"tip": exc.errors()}, "body": exc.body, "message": "fail"}),
         )
 
     # 捕获全部异常
@@ -98,7 +106,7 @@ def register_exception(app: FastAPI):
         logger.error(f"全局异常\nURL:{request.url}\nHeaders:{request.headers}\n{traceback.format_exc()}")
         return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            content={"code": 500, "data": {"tip": "服务器错误"}, "status": "fail"},
+            content={"code": 500, "data": {"tip": "服务器错误"}, "message": "fail"},
         )
 
 

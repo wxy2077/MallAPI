@@ -17,11 +17,10 @@ from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 
-
 from api.v1 import api_v1
 from extensions import logger
 from setting import config
-from utils.custom_exc import PostParamsError, TokenAuthError   # 自定义异常
+from utils.custom_exc import PostParamsError, TokenAuthError  # 自定义异常
 
 # swigger 文档分类 https://fastapi.tiangolo.com/tutorial/metadata/
 tags_metadata = [
@@ -52,7 +51,8 @@ def create_app():
     )
 
     register_exception(app)  # 注册捕获异常信息
-    register_cors(app)       # 跨域设置
+    register_cors(app)  # 跨域设置
+    register_middleware(app)
     return app
 
 
@@ -62,6 +62,7 @@ def register_exception(app: FastAPI):
     :param app:
     :return:
     """
+
     # 捕获自定义异常
     @app.exception_handler(PostParamsError)
     async def query_params_exception_handler(request: Request, exc: PostParamsError):
@@ -125,9 +126,28 @@ def register_cors(app: FastAPI):
         CORSMiddleware,
         # allow_origins=['http://localhost:8081'],  # 有效, 但是本地vue端口一直在变化, 接口给其他人用也不一定是这个端口
         # allow_origins=['*'],   # 无效 bug allow_origins=['http://localhost:8081']
-        allow_origin_regex='https?://.*',   # 改成用正则就行了
+        allow_origin_regex='https?://.*',  # 改成用正则就行了
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
 
+
+def register_middleware(app: FastAPI):
+    """
+    请求响应拦截 hook
+
+    https://fastapi.tiangolo.com/tutorial/middleware/
+    :param app:
+    :return:
+    """
+
+    @app.middleware("http")
+    async def logger_request(request: Request, call_next):
+        # https://stackoverflow.com/questions/60098005/fastapi-starlette-get-client-real-ip
+        logger.info(f"访问记录:{request.method} url:{request.url}\nheaders:{request.headers.get('user-agent')}"
+                    f"\nIP:{request.client.host}")
+
+        response = await call_next(request)
+
+        return response

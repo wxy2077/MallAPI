@@ -4,6 +4,11 @@
 
 构建项目接口: [对应博客](https://www.charmcode.cn/article/2020-06-08_vue_mall_api):https://www.charmcode.cn/article/2020-06-08_vue_mall_api
 
+## 声明
+此项目已经不再维护, 可以参考我另外一个项目[https://github.com/CoderCharm/fastapi-mysql-generator](https://github.com/CoderCharm/fastapi-mysql-generator)
+
+> 本来使用FastAPI写接口是为了配合我学习Vue顺手看着文档学的，没想到这么多老哥关注，上面那个项目我会尽可能更新完善，一起加油学习吧！！🤪
+
 #### 环境
 ![Python版本](https://img.shields.io/badge/Python-3.7+-brightgreen.svg "版本号")
 ![FastAPI版本](https://img.shields.io/badge/FastAPI-0.55.1-ff69b4.svg "版本号")
